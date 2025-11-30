@@ -3,7 +3,7 @@
 #include <sdktools>
 #undef REQUIRE_EXTENSIONS
 #undef REQUIRE_PLUGIN
-#include <tf2_stocks>
+// #include <tf2_stocks>
 
 #pragma newdecls required
 #pragma semicolon 1
@@ -42,7 +42,7 @@ public Plugin myinfo =
 	name = "NavBot Quota System",
 	author = "caxanga334",
 	description = "Bot quota system for the NavBot extension.",
-	version = "1.0.0",
+	version = "1.0.1",
 	url = "https://github.com/caxanga334/navbot-plugins"
 };
 
@@ -80,6 +80,9 @@ public void OnPluginStart()
 	cv_quota_smart_kick = CreateConVar("sm_navbot_quota_use_smart_kick", "1", "If enabled, uses the smart kick system.", FCVAR_NONE, true, 0.0, true, 1.0);
 	cv_quota_check_teams = CreateConVar("sm_navbot_quota_check_teams", "1", "If enabled, ignore unassigned and spectator clients.", FCVAR_NONE, true, 0.0, true, 1.0);
 
+	cv_quota_target.AddChangeHook(OnQuotaConVarChanged);
+	cv_quota_fixed.AddChangeHook(OnQuotaConVarChanged);
+
 	AutoExecConfig(true);
 
 	g_thinkState = STATE_NONE;
@@ -87,10 +90,29 @@ public void OnPluginStart()
 	HookEvent("player_team", Event_OnPlayerChangeTeam, EventHookMode_PostNoCopy);
 }
 
+public void OnConfigsExecuted()
+{
+	RequestFrame(CheckBotQuota);
+}
+
+void OnQuotaConVarChanged(ConVar convar, const char[] oldValue, const char[] newValue)
+{
+	if (!g_bIsRunningChecks)
+	{
+		g_bIsRunningChecks = true;
+		RequestFrame(CheckBotQuota);
+	}
+}
+
 public void OnMapStart()
 {
 	g_thinkState = STATE_NONE;
 	CreateTimer(2.0, Timer_QuotaThink, 0, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
+
+	if (!cv_quota_empty.BoolValue && cv_quota_target.IntValue > 0)
+	{
+		RequestFrame(CheckBotQuota);
+	}
 }
 
 public void OnClientPutInServer(int client)
@@ -125,6 +147,7 @@ void Event_OnPlayerChangeTeam(Event event, const char[] name, bool dontBroadcast
 	}
 }
 
+// Call this function (either directly or with requestframe) to update the bot quota logic
 void CheckBotQuota()
 {
 	int target = cv_quota_target.IntValue;
