@@ -58,6 +58,12 @@ jobs:
         with:
           version: ${{ matrix.sm-version }}
 
+      - name: Fetch SMLib
+        uses: actions/checkout@v6.0.0
+        with:
+          repository: bcserv/smlib
+          path: smlib
+
       - name: Fetch NavBot
         uses: actions/checkout@v6.0.0
         with:
@@ -67,6 +73,7 @@ jobs:
       - name: Move Fetched Includes to Shared Includes Path
         run: |
           rsync -rv ${{ github.workspace }}/navbot/scripting/include/* ${{ env.TPINCLUDES_PATH }}/
+          rsync -rv ${{ github.workspace }}/smlib/scripting/include/* ${{ env.TPINCLUDES_PATH }}/
           ls -lah ${{ env.TPINCLUDES_PATH }}/
 
       - name: Move Plugin Source Files to Build Directory
