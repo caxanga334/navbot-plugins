@@ -63,6 +63,7 @@ jobs:
         with:
           repository: bcserv/smlib
           path: smlib
+          ref: transitional_syntax
 
       - name: Fetch NavBot
         uses: actions/checkout@v6.0.0
