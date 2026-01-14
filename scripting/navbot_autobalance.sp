@@ -6,6 +6,8 @@
 #pragma newdecls required
 #pragma semicolon 1
 
+#define MIN_PLAYERS_TO_BALANCE 2
+
 ConVar c_difference = null;
 
 public Plugin myinfo =
@@ -13,7 +15,7 @@ public Plugin myinfo =
 	name = "Simple NavBot Auto Balancer",
 	author = "caxanga334",
 	description = "Automatically move navbots to teams with less players.",
-	version = "1.0.0",
+	version = "1.0.1",
 	url = "https://github.com/caxanga334/navbot-plugins"
 };
 
@@ -105,7 +107,8 @@ void Timer_Think(Handle timer)
 
 	int diff = Math_Abs(team1c - team2c);
 
-	if (diff < maxdiff)
+	// Difference must be at least 2 to balance teams.
+	if (diff < maxdiff || diff < MIN_PLAYERS_TO_BALANCE)
 	{
 		return;
 	}
