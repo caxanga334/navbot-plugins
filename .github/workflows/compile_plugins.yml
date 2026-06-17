@@ -35,6 +35,7 @@ jobs:
       TPINCLUDES_PATH: ${{ github.workspace }}/thirdparty/includes
       BUILD_PATH: ${{ github.workspace }}/build/source
       PACKAGE_PATH: ${{ github.workspace }}/build/package
+      GAMEDATA_PATH: ${{ github.workspace }}/build/package/addons/sourcemod/gamedata
       BINARY_PATH: ${{ github.workspace }}/build/package/addons/sourcemod/plugins
       SCRIPTING_PATH: ${{ github.workspace }}/build/package/addons/sourcemod/scripting
 
@@ -45,6 +46,7 @@ jobs:
           mkdir -p ${{ env.TPINCLUDES_PATH }}
           mkdir -p ${{ env.BUILD_PATH }}
           mkdir -p ${{ env.BINARY_PATH }}
+          mkdir -p ${{ env.GAMEDATA_PATH }}
           mkdir -p ${{ env.SCRIPTING_PATH }}
           mkdir -p ${{ env.SCRIPTING_PATH }}/include
 
@@ -103,6 +105,7 @@ jobs:
         run: |
           rsync -rv ${{ env.BUILD_PATH }}/*.smx ${{ env.BINARY_PATH }}/
           rsync -rv ${{ github.workspace }}/plugins/scripting/* ${{ env.SCRIPTING_PATH }}/
+          rsync -rv ${{ github.workspace }}/plugins/gamedata/* ${{ env.GAMEDATA_PATH }}/
 
       - name: Fetch Short SHA
         uses: benjlevesque/short-sha@v4.0

@@ -1,0 +1,41 @@
+"Games"
+{
+	"#default"
+	{
+		"Keys"
+		{
+			// Minimum player speed to emit footstep sounds
+			"PlayerFootstepMinSpeed" "150.0"
+			// Maximum distance the footstep sound can be heard
+			"PlayerFootstepRadius" "1024.0"
+			// Same as above but when crouched
+			"PlayerFootstepRadiusWhenCrouched" "350.0"
+		}
+	}
+	"dod" // Day of Defeat: Source
+	{
+		"Keys"
+		{
+			// players can still be heard even when crouched
+			"PlayerFootstepMinSpeed" "30.0"
+			"PlayerFootstepRadius" "1500.0"
+		}
+
+	}
+	"tf" // Team Fortress 2
+	{
+		"Keys"
+		{
+			"PlayerFootstepMinSpeed" "200.0"
+			"PlayerFootstepRadius" "512.0"
+			"PlayerFootstepRadiusWhenCrouched" "0.0" // disable event when crouched
+		}
+	}
+	"zps" // Zombie Panic! Source
+	{
+		"Keys"
+		{
+			"PlayerFootstepMinSpeed" "30.0"
+		}
+	}
+}
