@@ -139,6 +139,12 @@ void DownloadNavMeshPlaceDBIncludeFile(const char[] file, int index)
 	char path[256];
 	BuildPath(Path_SM, path, sizeof(path), "data/navbot/%s/%s.cfg", g_modfolder, file);
 
+	// Include files may be used by multiple maps, don't download if one exists.
+	if (FileExists(path, false))
+	{
+		return;
+	}
+
 	char url[512];
 	cvar_download_url.GetString(url, sizeof(url));
 	char append[256];
