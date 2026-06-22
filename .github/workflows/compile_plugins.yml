@@ -99,6 +99,7 @@ jobs:
           rsync -rv ${{ github.workspace }}/plugins/scripting/* ${{ env.BUILD_PATH }}/
 
       - name: Remove Excluded Plugins
+        working-directory: ${{ env.BUILD_PATH }}
         if: matrix.files-to-exclude != ''
         run: |
           for file in ${{ matrix.files-to-exclude }}; do
