@@ -10,7 +10,7 @@ public Plugin myinfo =
 	name = "SpawnPoint Checker Tool",
 	author = "caxanga334",
 	description = "Checks if player spawnpoints contains a nav area nearby.",
-	version = "1.0.0",
+	version = "1.1.0",
 	url = "https://github.com/caxanga334/navbot-plugins"
 };
 
@@ -19,6 +19,32 @@ ConVar cvar_search_radius = null;
 float g_Radius;
 char g_map[128];
 char g_logfile[PLATFORM_MAX_PATH];
+char g_spawnpointnames[16][64];
+int g_maxNames;
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	GameData gd = new GameData("spawnpoint_checker.games");
+
+	if (gd == null)
+	{
+		strcopy(error, err_max, "Failed to open spawnpoint_checker.games.txt gamedata file!");
+		return APLRes_Failure;
+	}
+
+	char buffer[2048];
+
+	if (!gd.GetKeyValue("SpawnPointClassnames", buffer, sizeof(buffer)))
+	{
+		strcopy(error, err_max, "Could not read \"SpawnPointClassnames\" key from gamedata file!");
+		return APLRes_Failure;
+	}
+
+	g_maxNames = ExplodeString(buffer, ",", g_spawnpointnames, sizeof(g_spawnpointnames), sizeof(g_spawnpointnames[]));
+
+	delete gd;
+	return APLRes_Success;
+}
 
 public void OnPluginStart()
 {
@@ -81,20 +107,24 @@ void RunChecks()
 	}
 
 	PrintToServer("Starting spawnpoint checks.");
-	int entity = INVALID_ENT_REFERENCE;
 	int n = 0;
 	int f = 0;
 
 	// TO-DO: Add an entity list via gamedata
 
-	while ((entity = FindEntityByClassname(entity, "info_player_*")) != INVALID_ENT_REFERENCE)
+	for (int i = 0; i < g_maxNames; i++)
 	{
-		if (!CheckEntity(entity))
-		{
-			f++;
-		}
+		int entity = INVALID_ENT_REFERENCE;
 
-		n++;
+		while ((entity = FindEntityByClassname(entity, g_spawnpointnames[i])) != INVALID_ENT_REFERENCE)
+		{
+			if (!CheckEntity(entity))
+			{
+				f++;
+			}
+
+			n++;
+		}
 	}
 
 	PrintToServer("Checks ended. Tested %i entities with %i failures.", n, f);
