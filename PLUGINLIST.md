@@ -51,3 +51,12 @@ The plugin also searches for place name database files.
 
 This plugin handles replacing survivor bots with NavBots.    
 Requires [Left 4 DHooks Direct](https://forums.alliedmods.net/showthread.php?t=321696).    
+
+## Spawn Point Checker
+
+Simple plugin for finding map spawnpoints without a nav area nearby.    
+Use the `sm_check_spawnpoints` admin command to run the check. Results are written to a log file saved inside SourceMod's logs folder.    
+
+## ZPS Nav Blockers
+
+Implements automatic nav area blockers for ZPS's `func_humanclip` and `func_zombieclip` entities.    
