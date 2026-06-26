@@ -26,7 +26,7 @@
 	{
 		"Keys"
 		{
-			"SpawnPointClassnames"		"info_player_human,info_player_zombie,info_player_carrier,info_player_commons"
+			"SpawnPointClassnames"		"info_player_human,info_player_zombie,info_player_carrier"
 		}
 	}
 }
