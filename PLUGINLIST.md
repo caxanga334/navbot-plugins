@@ -52,6 +52,11 @@ The plugin also searches for place name database files.
 This plugin handles replacing survivor bots with NavBots.    
 Requires [Left 4 DHooks Direct](https://forums.alliedmods.net/showthread.php?t=321696).    
 
+## Common Nav Blockers
+
+Implements nav auto blockers for common entities.    
+Specific blockers can be disabled in the auto generated config file.    
+
 ## Spawn Point Checker
 
 Simple plugin for finding map spawnpoints without a nav area nearby.    

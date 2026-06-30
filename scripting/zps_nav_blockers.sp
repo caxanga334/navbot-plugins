@@ -10,7 +10,7 @@ public Plugin myinfo =
 	name = "ZPS NavBot Nav Blocker Module",
 	author = "caxanga334",
 	description = "Implements Nav Auto Blockers for ZPS.",
-	version = "1.0.0",
+	version = "1.0.1",
 	url = "https://github.com/caxanga334/navbot-plugins"
 };
 
@@ -25,6 +25,20 @@ enum ZPSTeam
 };
 
 Handle g_RoundRestartTimer = null;
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	char gamefolder[16];
+	GetGameFolderName(gamefolder, sizeof(gamefolder));
+
+	if (strcmp(gamefolder, "zps") == 0)
+	{
+		return APLRes_Success;
+	}
+
+	strcopy(error, err_max, "This plugin is for Zombie Panic! Source only!");
+	return APLRes_SilentFailure;
+}
 
 public void OnPluginStart()
 {
