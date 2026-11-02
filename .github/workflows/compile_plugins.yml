@@ -38,6 +38,7 @@ jobs:
       GAMEDATA_PATH: ${{ github.workspace }}/build/package/addons/sourcemod/gamedata
       BINARY_PATH: ${{ github.workspace }}/build/package/addons/sourcemod/plugins
       SCRIPTING_PATH: ${{ github.workspace }}/build/package/addons/sourcemod/scripting
+      INC_PATH: ${{ github.workspace }}/build/package/addons/sourcemod/scripting/include
 
     steps:
       - name: Create Folders
@@ -48,7 +49,7 @@ jobs:
           mkdir -p ${{ env.BINARY_PATH }}
           mkdir -p ${{ env.GAMEDATA_PATH }}
           mkdir -p ${{ env.SCRIPTING_PATH }}
-          mkdir -p ${{ env.SCRIPTING_PATH }}/include
+          mkdir -p ${{ env.INC_PATH }}
 
       - name: Fetch Plugins
         uses: actions/checkout@v7
@@ -129,7 +130,7 @@ jobs:
         id: short-sha
 
       - name: Upload Compiled Plugins Artifact
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@v7
         with:
           name: plugins-${{ matrix.package-name }}-${{ steps.short-sha.outputs.sha }}
           path: |

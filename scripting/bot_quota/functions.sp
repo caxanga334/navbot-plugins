@@ -97,6 +97,34 @@ static void KickFirstDeadBot()
 
 void RemoveBot()
 {
+	if (g_selectBotForward.FunctionCount > 0)
+	{
+		int bot = 0;
+		Action result = Plugin_Continue;
+
+		Call_StartForward(g_selectBotForward);
+		Call_PushCellRef(bot);
+		Call_Finish(result);
+
+		// don't kick any bots on Plugin_Stop
+		if (result == Plugin_Stop)
+		{
+			return;
+		}
+
+		// If not continue
+		if (result > Plugin_Continue)
+		{
+			// Kick the given bot and make sure it's a valid bot.
+			if (bot > 0 && bot <= MaxClients && IsClientInGame(bot) && NavBotManager.IsNavBot(bot))
+			{
+				KickClient(bot, "Kicked by bot quota");
+			}
+
+			return;
+		}
+	}
+
 	if (cv_quota_dead_only.BoolValue)
 	{
 		KickFirstDeadBot();
