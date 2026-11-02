@@ -10,8 +10,7 @@ The plugin only supports games with two teams.
 
 ## NavBot Quota
 
-Adds a bot quota system.    
-A config file will be auto generated in `cfg/sourcemod`.    
+[Go to page.](BOT_QUOTA.md) 
 
 ## NavBot Hearing
 
