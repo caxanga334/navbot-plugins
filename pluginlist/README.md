@@ -76,3 +76,7 @@ Logs to a file every time a complete path cannot be built. Useful for finding pr
 ## Pathfinder
 
 [Go to page.](PATHFINDER.md)
+
+## NavBot Callouts
+
+[Go to page.](BOT_CALLOUTS.md)
