@@ -10,7 +10,7 @@ public Plugin myinfo =
 	name = "NavBot Quota System",
 	author = "caxanga334",
 	description = "Bot quota system for the NavBot extension.",
-	version = "1.1.1",
+	version = "1.1.2",
 	url = "https://github.com/caxanga334/navbot-plugins"
 };
 
@@ -33,14 +33,23 @@ enum QuotaMode
 QuotaMode g_mode;
 int g_quotaTarget;
 GlobalForward g_selectBotForward;
+GlobalForward g_countPlayerForward;
 
 #include "bot_quota/functions.sp"
 #include "bot_quota/timer_callback.sp"
 #include "bot_quota/commands.sp"
 
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	RegPluginLibrary("navbot_bot_quota");
+
+	return APLRes_Success;
+}
+
 public void OnPluginStart()
 {
 	g_selectBotForward = new GlobalForward("NavBotQuota_SelectBotToKick", ET_Hook, Param_CellByRef);
+	g_countPlayerForward = new GlobalForward("NavBotQuota_IsPlayerIgnored", ET_Hook, Param_Cell);
 
 	RegAdminCmd("sm_navbot_quota_list_players", CMD_ListPlayers, ADMFLAG_GENERIC, "List players and bots in the server.");
 

@@ -96,6 +96,10 @@ jobs:
           rsync -rv ${{ github.workspace }}/ripext/pawn/scripting/include/* ${{ env.TPINCLUDES_PATH }}/
           ls -lah ${{ env.TPINCLUDES_PATH }}/
 
+      - name: Move Includes to Shared Includes Path
+        run: |
+          rsync -rv ${{ github.workspace }}/plugins/scripting/include/* ${{ env.TPINCLUDES_PATH }}/
+
       - name: Move Plugin Source Files to Build Directory
         run: |
           rsync -rv ${{ github.workspace }}/plugins/scripting/* ${{ env.BUILD_PATH }}/

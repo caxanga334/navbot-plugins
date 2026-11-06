@@ -17,6 +17,14 @@
  */
 forward Action NavBotQuota_SelectBotToKick(int& targetbot);
 
+/**
+ * Called when counting the number of players in-game.
+ * 
+ * @param client			Client index (guaranteed to be in-game).
+ * @return					Plugin_Continue to count this player. Anything else to not count.
+ */
+forward Action NavBotQuota_IsPlayerIgnored(int client);
+
 public SharedPlugin __pl_navbot_bot_quota = 
 {
 	name = "navbot_bot_quota",

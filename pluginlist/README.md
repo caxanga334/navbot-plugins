@@ -12,6 +12,10 @@ The plugin only supports games with two teams.
 
 [Go to page.](BOT_QUOTA.md) 
 
+## NavBot Quota Module: Ignore Spectators
+
+[Go to page.](QUOTA_MODULE_IGNORE_SPEC.md) 
+
 ## NavBot Hearing
 
 General purpose plugin to implement a basic sound events for NavBots, allowing them to react to sounds.    

@@ -40,6 +40,20 @@ void CountPlayers(int& player, int& navbots)
 			}
 		}
 
+		if (g_countPlayerForward.FunctionCount > 0)
+		{
+			Action result = Plugin_Continue;
+			Call_StartForward(g_countPlayerForward);
+			Call_PushCell(i);
+			Call_Finish(result);
+
+			if (result != Plugin_Continue)
+			{
+				// forward told us this player should be ignored
+				continue;
+			}
+		}
+
 		player++; // add to the count
 	}
 }
